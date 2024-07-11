@@ -16,7 +16,7 @@ public class DemoApplicationTests {
     private TestRestTemplate restTemplate;
 
     private static GenericContainer<?> devApp = new GenericContainer<>("dev-app-image").withExposedPorts(8080);
-    private static GenericContainer<?> prodApp = new GenericContainer<>("prod-app-image").withExposedPorts(8080);
+    private static GenericContainer<?> prodApp = new GenericContainer<>("prod-app-image").withExposedPorts(8081);
 
     @BeforeAll
     public static void setUp() {
@@ -26,13 +26,13 @@ public class DemoApplicationTests {
 
     @Test
     void devProfileLoads() {
-        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + devApp.getMappedPort(8080) + "/profile", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + devApp.getMappedPort(8081) + "/profile", String.class);
         assertEquals("Current profile is dev", response.getBody());
     }
 
     @Test
     void prodProfileLoads() {
-        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + prodApp.getMappedPort(8080) + "/profile", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + prodApp.getMappedPort(8081) + "/profile", String.class);
         assertEquals("Current profile is production", response.getBody());
     }
 }
